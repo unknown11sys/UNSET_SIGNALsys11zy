@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNSENT_SIGNAL // 0091</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+--bg:#040609;
+--panel:#090e14;
+--cyan:#75eaff;
+--blue:#347aff;
+--muted:#526572;
+--white:#dce9ed;
+--red:#ff4568;
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+margin:0;
+background:var(--bg);
+color:var(--white);
+font-family:'Share Tech Mono',monospace;
+overflow-x:hidden;
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:10;
+opacity:.12;
+background:repeating-linear-gradient(
+transparent 0px,transparent 2px,#8beaff 3px
+);
+}
+
+body:after{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:9;
+background:radial-gradient(ellipse,transparent 35%,#000 100%);
+}
+
+.noise{
+position:fixed;
+inset:0;
+opacity:.08;
+pointer-events:none;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+header{
+display:flex;
+justify-content:space-between;
+padding:20px 7%;
+border-bottom:1px solid #1b2931;
+font-size:10px;
+letter-spacing:2px;
+color:var(--muted);
+}
+
+.status{color:var(--cyan)}
+
+main{
+width:min(900px,90%);
+margin:auto;
+}
+
+.hero{
+min-height:78vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding:65px 0;
+}
+
+.eyebrow{
+color:var(--cyan);
+font-size:11px;
+letter-spacing:4px;
+}
+
+h1{
+font-family:'Space Mono',monospace;
+font-size:clamp(40px,9vw,82px);
+line-height:1.05;
+margin:24px 0;
+letter-spacing:-4px;
+text-shadow:0 0 25px #367dff55;
+}
+
+h1 span{color:var(--cyan)}
+
+.subtitle{
+max-width:560px;
+color:#82949e;
+line-height:2;
+font-size:13px;
+}
+
+.terminal{
+margin-top:30px;
+padding:20px;
+border:1px solid #1b303b;
+background:#080c11;
+color:#718d9b;
+font-size:11px;
+line-height:2;
+overflow-wrap:anywhere;
+}
+
+.terminal strong{color:var(--cyan)}
+
+.section{
+border-top:1px solid #1a2830;
+padding:55px 0;
+}
+
+.section-title{
+color:var(--cyan);
+font-size:12px;
+letter-spacing:3px;
+margin-bottom:25px;
+}
+
+.section p{
+color:#9aabb4;
+font-size:13px;
+line-height:2.1;
+}
+
+.panel{
+border:1px solid #1b303b;
+background:linear-gradient(130deg,#0a1118,#07090d);
+padding:24px;
+margin:18px 0;
+position:relative;
+overflow:hidden;
+}
+
+.panel:before{
+content:"";
+position:absolute;
+width:100px;
+height:1px;
+background:var(--cyan);
+top:0;
+left:0;
+box-shadow:0 0 15px var(--cyan);
+}
+
+.panel h3{
+color:var(--cyan);
+font-size:14px;
+letter-spacing:2px;
+}
+
+.meta{
+color:#536875;
+font-size:10px;
+letter-spacing:2px;
+}
+
+button{
+border:1px solid #31596b;
+background:#071019;
+color:var(--cyan);
+padding:12px 18px;
+font-family:inherit;
+letter-spacing:2px;
+font-size:11px;
+cursor:pointer;
+margin-top:12px;
+transition:.25s;
+}
+
+button:hover{
+background:#102b39;
+box-shadow:0 0 18px #367dff55;
+}
+
+.hidden-message{
+display:none;
+color:#c4d9df;
+border-left:2px solid var(--cyan);
+padding:15px;
+margin-top:18px;
+line-height:2;
+font-size:13px;
+}
+
+.memory{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:12px;
+}
+
+.memory .panel{margin:0}
+
+.code{
+color:#426273;
+font-size:10px;
+line-height:2;
+overflow-wrap:anywhere;
+}
+
+input{
+background:#030609;
+border:1px solid #29414e;
+padding:14px;
+color:var(--cyan);
+font-family:inherit;
+outline:none;
+width:100%;
+max-width:350px;
+margin-top:10px;
+}
+
+input:focus{border-color:var(--cyan)}
+
+#result{
+color:var(--cyan);
+font-size:12px;
+margin-top:15px;
+line-height:2;
+}
+
+.transmission{
+text-align:center;
+padding:85px 10px;
+border-top:1px solid #1a2830;
+}
+
+.transmission h2{
+color:var(--cyan);
+font-family:'Space Mono',monospace;
+letter-spacing:3px;
+font-size:clamp(20px,5vw,32px);
+}
+
+.sky-message{
+font-family:'Space Mono',monospace;
+font-size:clamp(17px,4vw,24px);
+line-height:2;
+color:var(--cyan);
+margin:50px auto;
+max-width:680px;
+text-shadow:0 0 15px #367dff55;
+}
+
+footer{
+padding:30px 7%;
+border-top:1px solid #1a2830;
+color:#43535c;
+font-size:10px;
+letter-spacing:2px;
+display:flex;
+justify-content:space-between;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.blink{animation:blink 1.1s infinite}
+
+@keyframes blink{50%{opacity:0}}
+
+.glitch{animation:glitch 4s infinite}
+
+@keyframes glitch{
+0%,94%,100%{transform:none}
+95%{transform:translateX(2px)}
+97%{transform:translateX(-2px)}
+}
+
+@media(max-width:600px){
+header{font-size:9px;padding:16px 5%}
+h1{letter-spacing:-2px}
+.hero{min-height:70vh}
+.panel{padding:18px}
+footer{font-size:9px}
+}
+</style>
+</head>
+
+<body>
+<div class="noise"></div>
+
+<header>
+<div>UNSENT_SIGNAL / 0091</div>
+<div class="status">SYSTEM ONLINE <span class="blink">_</span></div>
+</header>
+
+<main>
+
+<section class="hero">
+<div class="eyebrow">[ ARCHIVE ACCESS // 00x91 ]</div>
+
+<h1 class="glitch">
+UNSENT_<br><span>SIGNAL</span>
+</h1>
+
+<p class="subtitle">
+An encrypted collection of unfinished transmissions,
+fragmented memories, and everything that passed
+without completely disappearing.
+</p>
+
+<div class="terminal">
+&gt; INITIALIZING MEMORY CORE... <strong>OK</strong><br>
+&gt; SUBJECT IDENTIFICATION... <strong>UNKNOWN</strong><br>
+&gt; ARCHIVE DIRECTORY... <strong>FOUND</strong><br>
+&gt; CONNECTION STATUS... <strong>INACTIVE</strong><br>
+&gt; RESTORING FRAGMENT 0x7F3A... <strong>DONE</strong><br>
+&gt; AWAITING TRANSMISSION<span class="blink">_</span>
+</div>
+</section>
+
+<section class="section">
+<div class="section-title">01 // SYSTEM LOG</div>
+
+<div class="code">
+0x0001 :: INITIALIZATION<br>
+0x0002 :: MEMORY_RETRIEVAL<br>
+0x0003 :: CONNECTION_ESTABLISHED<br>
+0x0004 :: TIME_PASSED<br>
+0x0005 :: DISTANCE_DETECTED<br>
+0x0006 :: ACCEPTANCE_PENDING<br>
+0x0007 :: ARCHIVE_PRESERVED<br>
+0x0008 :: NO_DELETION_REQUESTED
+</div>
+
+<p>
+Not every ending needs to become a disappearance.
+Not every memory needs to be erased to make room
+for something new.
+</p>
+
+<p>
+Some things simply move to another place:
+no longer part of the present,
+but still part of the story.
+</p>
+</section>
+
+<section class="section">
+<div class="section-title">02 // MEMORY ARCHIVE</div>
+
+<div class="memory">
+
+<div class="panel">
+<div class="meta">FRAGMENT_001 // 0xA091</div>
+<h3>FIRST FREQUENCY</h3>
+<div class="code">SIGNAL: 98.7% / ORIGIN: UNKNOWN</div>
+<button onclick="reveal('m1')">DECRYPT FILE</button>
+<div class="hidden-message" id="m1">
+Before everything had a meaning,
+there was only an ordinary moment.
+Strange how ordinary things can become
+the beginning of something memorable.
+</div>
+</div>
+
+<div class="panel">
+<div class="meta">FRAGMENT_002 // 0xB172</div>
+<h3>FAMILIAR STATIC</h3>
+<div class="code">SIGNAL: 76.2% / STATUS: ARCHIVED</div>
+<button onclick="reveal('m2')">DECRYPT FILE</button>
+<div class="hidden-message" id="m2">
+Somewhere between the conversations
+and the passing days,
+unfamiliar became familiar.
+And the world kept moving
+as if nothing had changed.
+</div>
+</div>
+
+<div class="panel">
+<div class="meta">FRAGMENT_003 // 0xC203</div>
+<h3>AFTER THE SIGNAL</h3>
+<div class="code">SIGNAL: 00.0% / STATUS: QUIET</div>
+<button onclick="reveal('m3')">DECRYPT FILE</button>
+<div class="hidden-message" id="m3">
+Maybe some things are not meant to
+return to the way they were.
+But that doesn't make their existence
+any less meaningful.
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<div class="section-title">03 // SECRET DIRECTORY</div>
+
+<div class="panel">
+<div class="meta">ROOT / UNKNOWN / DIRECTORY_0091</div>
+<h3>ACCESS RESTRICTED</h3>
+
+<p>
+A directory containing one final unindexed file.
+Enter the archive keyword to reveal its contents.
+</p>
+
+<input id="secretInput"
+type="text"
+placeholder="ENTER ACCESS KEYWORD..."
+autocomplete="off">
+
+<br>
+<button onclick="checkSecret()">EXECUTE ACCESS</button>
+
+<div id="result"></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-title">04 // RAW TRANSMISSION</div>
+
+<div class="terminal">
+0x0091 0x7F3A 0xA001 0xFF02<br>
+01010011 01010100 01001001 01001100 01001100<br>
+7A 69 6A 6F 6C 73 2D 30 30 39 31<br>
+FF 00 A9 7C 3D 11 08 2B 6E 90<br>
+10101010 00001111 11110000<br>
+ERROR_404 : DESTINATION_NOT_FOUND<br>
+MEMORY_HASH : 8F14E45FCEEA167A<br>
+PACKET_STATUS : UNSENT<br>
+ARCHIVE_INDEX : 00000091
+</div>
+
+<p>
+Some messages were never delivered.
+Some questions were never answered.
+Some words remained where they were first written.
+</p>
+</section>
+
+<section class="transmission">
+<div class="section-title">05 // FINAL TRANSMISSION</div>
+
+<h2>IF THIS REACHES YOU.</h2>
+
+<p>
+You don't have to return.<br>
+You don't have to explain.<br>
+You don't have to become someone you were before.
+</p>
+
+<p>
+I hope everything ahead of you is kind.<br>
+I hope the things you are searching for<br>
+eventually find their way to you.
+</p>
+
+<div class="sky-message">
+The sky was never mine to keep,<br>
+yet I am grateful I once got to look at it.
+</div>
+
+<div class="code">
+NO OWNERSHIP :: NO EXPECTATION :: ONLY GRATITUDE<br>
+[ ARCHIVE STATUS : PRESERVED ]<br>
+[ TRANSMISSION : COMPLETE ]<br>
+[ DELIVERY : UNCONFIRMED ]
+</div>
+</section>
+
+</main>
+
+<footer>
+<span>UNSENT_SIGNAL // BUILD 002</span>
+<span>FILE_ID : 0091-7F3A</span>
+<span>END_OF_RECORD.dat</span>
+</footer>
+
+<script>
+function reveal(id){
+const element=document.getElementById(id);
+element.style.display=
+element.style.display==="block"?"none":"block";
+}
+
+function checkSecret(){
+const input=document.getElementById("secretInput");
+const result=document.getElementById("result");
+
+if(input.value.trim().toLowerCase()==="afterglow"){
+result.innerHTML=
+"[ ACCESS GRANTED ]<br><br>"+
+"FILE_0091 // RECOVERED<br><br>"+
+"Not everything that has passed is gone.<br>"+
+"Some things remain, not as expectations,<br>"+
+"but as quiet parts of who we became.";
+}else{
+result.innerHTML=
+"[ ACCESS DENIED ]<br>"+
+"ERROR 0x404 : INVALID KEYWORD";
+}
+}
+</script>
+
+</body>
+</html>
